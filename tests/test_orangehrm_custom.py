@@ -4,6 +4,7 @@ from pages.leave_section import LeaveSection
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 url = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
 user = "Admin"
@@ -25,10 +26,9 @@ def test_user_login(setup_browser):
 def test_navigate_my_leave(setup_browser):
     setup_browser.get(url)
     LoginScreen(setup_browser).do_login(user, pwd)
-
     dash = MainDashboard(setup_browser)
     dash.open_my_leave()
-
+    time.sleep(4)
     leave = LeaveSection(setup_browser)
     WebDriverWait(setup_browser, 10).until(lambda d: leave.is_leave_section_visible())
     assert leave.is_leave_section_visible()
